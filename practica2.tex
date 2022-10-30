@@ -1,0 +1,83 @@
+\documentclass[11pt]{article}
+\usepackage{graphicx}
+\graphicspath{{Escritorio/practicas/talf/practica\ 2/}}
+    \title{\textbf{Práctica 2}}
+    \author{Juan Miguel Fernández Tejada}
+    \date{29/10/2022}
+    
+    \addtolength{\topmargin}{-3cm}
+    \addtolength{\textheight}{3cm}
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\section{Consider the language over the alphabet \{a, b\} that only contains the string a.}
+
+\begin{enumerate}
+\item \textbf{Build a DFA that recognizes this language and rejects all those strings that do not belong to the language.}\\
+El autómata pedido es una 5-tupla $(K, \Sigma, \delta, s, F)$, donde:
+\begin{itemize}
+\item $K = \{q_0, q_1\}$
+\item $\Sigma = \{a, b\}$
+\item $s = q_0$
+\item $F = \{q_1\}$
+\item $\delta(q_0, a) = q_1$
+\end{itemize}
+\item \textbf{Test the automaton that you have created by introducing 6 chains.}\\\\
+\includegraphics[scale=0.33]{automata.png}
+\end{enumerate}
+\section{Finite automaton in Octave:}
+\begin{enumerate}
+\item  \textbf{Open the Octave finiteautomata.m script and test it with the given example (see script help) in the GitHub repository.}
+\item \textbf{Specify in finiteautomata.json the automaton created in Activity 1 and test it with the script!}
+\begin{verbatim}
+{
+    "name" : "ejercicio1",
+    "representation" : {
+        "K" : ["q0", "q1"],
+        "A" : ["a", "b"],
+        "s" : "q0",
+        "F" : ["q1"],
+        "t" : [["q0", "a", "q1"]]
+     }
+}
+
+octave:1> finiteautomaton("ejercicio1", "a")
+warning: strmatch is obsolete; use strncmp or strcmp instead
+
+M = ({q0, q1}, {a, b}, {(q0, a, q1)}, q0, {q1})
+
+w = a
+
+(q0, a) produces (q1, epsilon)
+
+x in L(M)
+ans = 1
+
+octave:2> finiteautomaton("ejercicio1", "b")
+
+M = ({q0, q1}, {a, b}, {(q0, a, q1)}, q0, {q1})
+
+w = b
+
+(q0, b)
+
+x not in L(M) (blocked computation)
+ans = 0
+
+octave:3> finiteautomaton("ejercicio1", "ab")
+
+M = ({q0, q1}, {a, b}, {(q0, a, q1)}, q0, {q1})
+
+w = ab
+
+(q0, ab) produces (q1, b)
+
+x not in L(M) (blocked computation)
+ans = 0
+\end{verbatim}
+\end{enumerate}
+
+\end{document}
+
